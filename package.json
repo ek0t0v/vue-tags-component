@@ -1,0 +1,41 @@
+{
+  "name": "vue-tags-component",
+  "version": "1.0.0",
+  "description": "Vue.js 2+ tags component",
+  "author": "dev@seniorcote.com",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --watch --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/seniorcote/vue-tags-component"
+  },
+  "peerDependencies": {
+    "vue": "^2.0.0"
+  },
+  "keywords": [
+    "vue",
+    "dropdown",
+    "select",
+    "tags"
+  ],
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^1.0.0",
+    "extract-text-webpack-plugin": "v4.0.0-alpha.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "style-loader": "^0.21.0",
+    "vue": "^2.5.16",
+    "vue-loader": "^14.0.0",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.10.2",
+    "webpack-cli": "^2.1.5",
+    "webpack-merge": "^4.1.0"
+  }
+}
