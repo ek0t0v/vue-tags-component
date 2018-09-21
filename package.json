@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/seniorcote/vue-tags-component"
+    "url": "https://github.com/seniorcote/vue-tags-component"
   },
   "peerDependencies": {
     "vue": "^2.0.0"
