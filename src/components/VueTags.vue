@@ -162,8 +162,8 @@
                             break;
                         case 8: // backspace
                             if (self.$refs.search.value.length < 1) {
-                                // тут стоит возвращать сам тег - сейчас логика основана на том, что backspace
-                                // удаляет теги по очереди с конца
+                                // Тут стоит возвращать сам тег - сейчас логика основана на том, что backspace
+                                // удаляет теги по очереди с конца.
                                 if (self.active.length > 0) {
                                     self.removeTag(self.active.length - 1);
                                 }
