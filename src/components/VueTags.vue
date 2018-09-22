@@ -117,10 +117,7 @@
         computed: {
             filteredList() {
                 this.currentTagFromList = null;
-
-                let items = document.querySelectorAll('.' + this.tagClass);
-
-                items.forEach(item => item.classList.remove(this.tagFocusedClass));
+                document.querySelectorAll(this.tagClass).forEach(item => item.classList.remove(this.tagFocusedClass));
 
                 return this.all.filter(tag => tag.name.toLowerCase().indexOf(this.search.toLowerCase()) >= 0);
             },
@@ -138,76 +135,37 @@
                 }
 
                 document.onmouseover = () => {
-                    let items = document.querySelectorAll('.' + self.tagClass);
-
-                    items.forEach((item, i) => {
-                        item.addEventListener('mouseover', e => {
-                            items.forEach(item => item.classList.remove(self.tagFocusedClass));
+                    document.querySelectorAll('.' + self.tagClass).forEach((item, i) => {
+                        item.addEventListener('mouseover', () => {
                             self.currentTagFromList = i;
-                            e.currentTarget.classList.add(self.tagFocusedClass);
                         });
                     });
+
+                    self.updateSelection();
                 };
 
                 document.onkeydown = e => {
-                    let items = document.querySelectorAll('.' + self.tagClass);
-
                     switch (e.keyCode) {
-                        case 13: // enter
-                            if (!self.tagSelected(self.currentTagFromList)) {
-                                self.addTag(self.currentTagFromList);
-                                self.search = '';
-                            }
+                        case 13:
+                            self.handleEnterKey();
 
                             break;
-                        case 8: // backspace
-                            if (self.$refs.search.value.length < 1) {
-                                // Тут стоит возвращать сам тег - сейчас логика основана на том, что backspace
-                                // удаляет теги по очереди с конца.
-                                if (self.active.length > 0) {
-                                    self.removeTag(self.active.length - 1);
-                                }
-                            }
+                        case 8:
+                            self.handleBackspaceKey();
 
                             break;
-                        case 9: // tab
-                            if (self.tagListActive) {
-                                self.tagListActive = false;
-                                self.currentTagFromList = null;
-                                self.search = '';
-                            }
+                        case 9:
+                            self.handleTabKey();
 
                             break;
-                        case 38: // up
-                            if (self.currentTagFromList === null || self.currentTagFromList <= 0) {
-                                self.currentTagFromList = self.filteredList.length - 1;
-                                self.$refs.list.scrollTo(0, self.getScrollHeight());
-                            } else if (self.currentTagFromList > 0) {
-                                self.currentTagFromList--;
-                            }
-
-                            if (self.filteredList.length - self.currentTagFromList > self.elementCountForStartArrowScrolling) {
-                                self.$refs.list.scrollBy(0, -1 * self.tagListElementHeight);
-                            }
-
-                            items.forEach(item => item.classList.remove(self.tagFocusedClass));
-                            items[self.currentTagFromList].classList.add(self.tagFocusedClass);
+                        case 38:
+                            self.handleUpKey();
+                            self.updateSelection();
 
                             break;
-                        case 40: // down
-                            if (self.currentTagFromList === null || self.currentTagFromList === self.filteredList.length - 1) {
-                                self.currentTagFromList = 0;
-                                self.$refs.list.scrollTo(0, 0);
-                            } else if (self.currentTagFromList >= 0 && self.currentTagFromList < self.filteredList.length - 1) {
-                                self.currentTagFromList++;
-                            }
-
-                            if (self.currentTagFromList > self.elementCountForStartArrowScrolling - 1) {
-                                self.$refs.list.scrollBy(0, self.tagListElementHeight);
-                            }
-
-                            items.forEach(item => item.classList.remove(self.tagFocusedClass));
-                            items[self.currentTagFromList].classList.add(self.tagFocusedClass);
+                        case 40:
+                            self.handleDownKey();
+                            self.updateSelection();
 
                             break;
                     }
@@ -224,6 +182,61 @@
             tagSelected(index) {
                 return this.active.some(element => {
                     return element.slug === this.filteredList[index].slug;
+                });
+            },
+            handleEnterKey() {
+                if (!this.tagSelected(this.currentTagFromList)) {
+                    this.addTag(this.currentTagFromList);
+                    this.search = '';
+                }
+            },
+            handleTabKey() {
+                if (this.tagListActive) {
+                    this.tagListActive = false;
+                    this.currentTagFromList = null;
+                    this.search = '';
+                }
+            },
+            handleBackspaceKey() {
+                if (this.$refs.search.value.length < 1) {
+                    // Тут стоит возвращать сам тег - сейчас логика основана на том, что backspace
+                    // удаляет теги по очереди с конца.
+                    if (this.active.length > 0) {
+                        this.removeTag(this.active.length - 1);
+                    }
+                }
+            },
+            handleUpKey() {
+                if (this.currentTagFromList === null || this.currentTagFromList <= 0) {
+                    this.currentTagFromList = this.filteredList.length - 1;
+                    this.$refs.list.scrollTo(0, this.getScrollHeight());
+                } else if (this.currentTagFromList > 0) {
+                    this.currentTagFromList--;
+                }
+
+                if (this.filteredList.length - this.currentTagFromList > this.elementCountForStartArrowScrolling) {
+                    this.$refs.list.scrollBy(0, -1 * this.tagListElementHeight);
+                }
+            },
+            handleDownKey() {
+                if (this.currentTagFromList === null || this.currentTagFromList === this.filteredList.length - 1) {
+                    this.currentTagFromList = 0;
+                    this.$refs.list.scrollTo(0, 0);
+                } else if (this.currentTagFromList >= 0 && this.currentTagFromList < this.filteredList.length - 1) {
+                    this.currentTagFromList++;
+                }
+
+                if (this.currentTagFromList > this.elementCountForStartArrowScrolling - 1) {
+                    this.$refs.list.scrollBy(0, this.tagListElementHeight);
+                }
+            },
+            updateSelection() {
+                document.querySelectorAll('.' + this.tagClass).forEach((item, i) => {
+                    if (i === this.currentTagFromList) {
+                        item.classList.add(this.tagFocusedClass);
+                    } else {
+                        item.classList.remove(this.tagFocusedClass);
+                    }
                 });
             },
             getScrollHeight() {
