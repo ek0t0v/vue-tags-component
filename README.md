@@ -6,6 +6,8 @@
 
 The package contains a Vue.js component for adding and removing tags.
 
+![](screenshot.gif)
+
 ## Features
 
 - keyboard control
