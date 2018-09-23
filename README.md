@@ -4,24 +4,26 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![npm](https://img.shields.io/npm/dt/vue-tags-component.svg?style=flat-square)](https://www.npmjs.com/package/vue-tags-component)
 
-## Фичи
+The package contains a Vue.js component for adding and removing tags.
 
-- управление стрелками, а также клавишами enter/tab/backspace
-- фильтрация тегов
-- события
+## Features
+
+- keyboard control
+- search
+- events
 - tabindex
 
-## Установка
+## Installation
 
-С помощью npm:
+Install the package via npm:
 
 ```sh
 $ npm install --save vue-tags-component
 ```
 
-## Использование
+## Usage
 
-Подключение компонента:
+The most common use case is to register the component globally:
 
 ```js
 import Vue from 'vue';
@@ -30,7 +32,7 @@ import { VueTags } from 'vue-tags-component';
 Vue.component('vue-tags', VueTags);
 ```
 
-Размещение в html-файле или другом компоненте:
+On your page you can now use html like this:
 
 ```html
 <vue-tags
@@ -45,7 +47,7 @@ Vue.component('vue-tags', VueTags);
 />
 ```
 
-Все возможные props и события указаны в примере выше. Передаваемые теги должны выглядеть так:
+All props and events are indicated in the example above. Tags should look like this:
 
 ```json
 [
@@ -59,29 +61,29 @@ Vue.component('vue-tags', VueTags);
 
 ## TODO
 
-- Закрытие выпадающего списка при клике вне компонента.
-- Убирать из общего списка тегов уже добавленные теги. В поиске не находить уже добавленный тег.
-- Сделать функционал создания нового тега, добавить событие создания тега. Сделать этот функционал опциональным (возможность включить через props).
-- Валидация объектов тегов в props - тег должен содержать name, slug и color.
-- Придумать удобный способ стилизации (переопределение стандартных стилей или какой-то другой способ).
-- Адаптивность.
-- Анимация.
-- Плейсхолдер для поисковой строки (нужен ли?). Показ плейсхолдера только когда ни одного тега не выбрано.
+- Closing the drop-down list when clicking outside the component.
+- Remove already added tags from the general list of tags. In the search, you can not find an already added tag.
+- Make the functionality of creating a new tag, add a tag creation event. Make this functionality optional (the ability to enable via props).
+- Validating tag objects in the prop, the tag must contain name, slug, and color.
+- To think up a convenient way of styling (redefining standard styles or some other way).
+- Adaptive layout.
+- Animation.
+- Placeholder for the search string (do you need?). Show the placeholder only when no tag is selected.
 
-## События
+## Events
 
 ### onTagAdded
 
-Вызывается при добавлении тега в список активных, передает объект тега.
+Called when the tag is added to the active list, it passes the tag object.
 
 ### onTagRemoved
 
-Вызывается при удалении тега из списка активных, передает объект тега.
+Called when the tag is removed from the active list, it passes the tag object.
 
 ### onTagListOpened
 
-Вызывается при открытии списка тегов.
+Called when opening a list of tags.
 
 ### onTagListClosed
 
-Вызывается при закрытии списка тегов.
+Called when the list of tags is closed.
