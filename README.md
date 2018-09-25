@@ -47,6 +47,8 @@ On your page you can now use html like this:
     :all="allTags"
     :element-count-for-start-arrow-scrolling="3"
     :tab-index="1"
+    :colors="false"
+    :tagColorDefault="'green'"
     @on-tag-added="onTagAdded"
     @on-tag-removed="onTagRemoved"
     @on-tag-list-opened="onTagListOpened"
@@ -60,8 +62,8 @@ All props and events are indicated in the example above. Tags should look like t
 [
     {
         "name": "Tag",
-        "slug": "tag",
-        "color": "#963dff"
+        "slug": "tag (optional)",
+        "color": "#963dff (optional)"
     }
 ]
 ```
@@ -76,6 +78,7 @@ All props and events are indicated in the example above. Tags should look like t
 - Adaptive layout.
 - Animation.
 - Placeholder for the search string (do you need?). Show the placeholder only when no tag is selected.
+- tagColorDefault prop validation.
 
 ## Events
 

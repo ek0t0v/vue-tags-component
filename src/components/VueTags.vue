@@ -19,7 +19,7 @@
                     class="tag"
                     v-for="(tag, index) in active"
                     :key="index"
-                    :style="'background-color:' + tag.color"
+                    :style="'background-color:' + (colors && 'color' in tag ? tag.color : tagColorDefault)"
                 >
                     <span class="tag__name">{{ tag.name }}</span>
                     <div
@@ -57,7 +57,7 @@
                 >
                     <div
                         class="tags__list-item-tag"
-                        :style="'background-color:' + tag.color"
+                        :style="'background-color:' + (colors && 'color' in tag ? tag.color : tagColorDefault)"
                     >
                         <span>{{ tag.name }}</span>
                     </div>
@@ -91,6 +91,16 @@
                 default: 1,
                 validator: value => value > 0,
             },
+            colors: {
+                type: Boolean,
+                required: false,
+                default: false,
+            },
+            tagColorDefault: {
+                type: String,
+                required: false,
+                default: '#333',
+            }
         },
         data() {
             return {
