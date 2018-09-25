@@ -17,10 +17,15 @@ The package contains a Vue.js component for adding and removing tags.
 
 ## Installation
 
-Install the package via npm:
+You can install the package via npm:
 
 ```sh
 $ npm install --save vue-tags-component
+```
+or yarn:
+
+```sh
+$ yarn add vue-tags-component
 ```
 
 ## Usage

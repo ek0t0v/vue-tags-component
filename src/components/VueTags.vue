@@ -114,11 +114,12 @@
                 self.search = '';
             });
         },
+        updated() {
+            this.currentTagFromList = 0;
+            this.updateSelection();
+        },
         computed: {
             filteredList() {
-                this.currentTagFromList = null;
-                document.querySelectorAll(this.tagClass).forEach(item => item.classList.remove(this.tagFocusedClass));
-
                 return this.all.filter(tag => tag.name.toLowerCase().indexOf(this.search.toLowerCase()) >= 0);
             },
         },
