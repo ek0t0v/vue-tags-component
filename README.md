@@ -49,6 +49,7 @@ On your page you can now use html like this:
     :tab-index="1"
     :colors="false"
     :tagColorDefault="'green'"
+    :tag-list-label="'Select an option'"
     @on-tag-added="onTagAdded"
     @on-tag-removed="onTagRemoved"
     @on-tag-list-opened="onTagListOpened"

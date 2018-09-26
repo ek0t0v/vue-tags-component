@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.12] - 2018-09-26
+
+- Add `tagListLabel` prop.
+
 ## [1.0.11] - 2018-09-25
 
 - Add `colors` prop.

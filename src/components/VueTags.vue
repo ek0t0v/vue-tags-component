@@ -48,7 +48,7 @@
                 v-if="tagListActive"
                 ref="list"
             >
-                <span>Select an option or create one</span>
+                <span>{{ tagListLabel }}</span>
                 <div
                     class="tags__list-item"
                     v-for="(tag, index) in filteredList"
@@ -100,6 +100,11 @@
                 type: String,
                 required: false,
                 default: '#333',
+            },
+            tagListLabel: {
+                type: String,
+                required: false,
+                default: 'Select an option',
             }
         },
         data() {
