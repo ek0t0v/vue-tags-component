@@ -118,17 +118,13 @@
             };
         },
         mounted() {
-            window.addEventListener('click', () => {
-                this.$emit('on-tag-list-closed');
-
-                document.onkeydown = null;
-                this.tagListActive = false;
-                this.currentTagFromList = null;
-                this.search = '';
-            });
+            window.addEventListener('click', e => this.handleClickOutsideTagList(e));
         },
         updated() {
-            this.currentTagFromList = 0;
+            if (this.search.length > 0) {
+                this.currentTagFromList = 0;
+            }
+
             this.updateSelection();
         },
         computed: {
@@ -192,9 +188,7 @@
                 this.$emit('on-tag-removed', tag);
             },
             tagSelected(index) {
-                return this.active.some(element => {
-                    return element.slug === this.filteredList[index].slug;
-                });
+                return this.active.some(element => element.slug === this.filteredList[index].slug);
             },
             handleEnterKey() {
                 if (!this.tagSelected(this.currentTagFromList)) {
@@ -210,7 +204,13 @@
                 }
             },
             handleBackspaceKey() {
-                if (this.$refs.search.value.length < 1) {
+                let searchTextLength = this.$refs.search.value.length;
+
+                if (searchTextLength === 1) {
+                    this.currentTagFromList = null;
+                }
+
+                if (searchTextLength < 1) {
                     // Тут стоит возвращать сам тег - сейчас логика основана на том, что backspace
                     // удаляет теги по очереди с конца.
                     if (this.active.length > 0) {
@@ -241,6 +241,16 @@
                 if (this.currentTagFromList > this.elementCountForStartArrowScrolling - 1) {
                     this.$refs.list.scrollBy(0, this.tagListElementHeight);
                 }
+            },
+            handleClickOutsideTagList(e) {
+                if (e.target.closest('.tags__list')) return;
+
+                this.$emit('on-tag-list-closed');
+
+                document.onkeydown = null;
+                this.tagListActive = false;
+                this.currentTagFromList = null;
+                this.search = '';
             },
             updateSelection() {
                 document.querySelectorAll('.' + this.tagClass).forEach((item, i) => {

@@ -71,7 +71,7 @@ All props and events are indicated in the example above. Tags should look like t
 
 ## TODO
 
-- Closing the drop-down list when clicking outside the component.
+- ~~Closing the drop-down list when clicking outside the component.~~
 - Remove already added tags from the general list of tags. In the search, you can not find an already added tag.
 - Make the functionality of creating a new tag, add a tag creation event. Make this functionality optional (the ability to enable via props).
 - Validating tag objects in the prop, the tag must contain name, slug, and color.
