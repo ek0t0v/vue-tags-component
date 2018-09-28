@@ -180,8 +180,13 @@
                 };
             },
             addTag(index) {
+                if (!this.tagSelected(index) && this.search.length > 0) {
+                    this.currentTagFromList = null;
+                }
+
                 if (!this.tagSelected(index)) {
                     this.$emit('on-tag-added', this.filteredList[index]);
+                    this.search = '';
                 }
             },
             removeTag(tag) {
@@ -193,7 +198,6 @@
             handleEnterKey() {
                 if (!this.tagSelected(this.currentTagFromList)) {
                     this.addTag(this.currentTagFromList);
-                    this.search = '';
                 }
             },
             handleTabKey() {
@@ -204,13 +208,11 @@
                 }
             },
             handleBackspaceKey() {
-                let searchTextLength = this.$refs.search.value.length;
-
-                if (searchTextLength === 1) {
+                if (this.search.length === 1) {
                     this.currentTagFromList = null;
                 }
 
-                if (searchTextLength < 1) {
+                if (this.search.length < 1) {
                     // Тут стоит возвращать сам тег - сейчас логика основана на том, что backspace
                     // удаляет теги по очереди с конца.
                     if (this.active.length > 0) {
@@ -254,11 +256,9 @@
             },
             updateSelection() {
                 document.querySelectorAll('.' + this.tagClass).forEach((item, i) => {
-                    if (i === this.currentTagFromList) {
-                        item.classList.add(this.tagFocusedClass);
-                    } else {
-                        item.classList.remove(this.tagFocusedClass);
-                    }
+                    i === this.currentTagFromList
+                        ? item.classList.add(this.tagFocusedClass)
+                        : item.classList.remove(this.tagFocusedClass);
                 });
             },
             getScrollHeight() {

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.14] - 2018-09-29
+
+- Fix tag selection behavior.
+
 ## [1.0.13] - 2018-09-29
 
 - Add the drop-down list closing when clicking outside the component.
