@@ -48,7 +48,7 @@ On your page you can now use html like this:
     :element-count-for-start-arrow-scrolling="3"
     :tab-index="1"
     :colors="false"
-    :tagColorDefault="'green'"
+    :tag-color-default="'green'"
     :tag-list-label="'Select an option'"
     @on-tag-added="onTagAdded"
     @on-tag-removed="onTagRemoved"

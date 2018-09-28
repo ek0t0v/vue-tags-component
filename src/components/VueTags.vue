@@ -118,15 +118,13 @@
             };
         },
         mounted() {
-            let self = this;
-
             window.addEventListener('click', () => {
-                self.$emit('on-tag-list-closed');
+                this.$emit('on-tag-list-closed');
 
                 document.onkeydown = null;
-                self.tagListActive = false;
-                self.currentTagFromList = null;
-                self.search = '';
+                this.tagListActive = false;
+                this.currentTagFromList = null;
+                this.search = '';
             });
         },
         updated() {
@@ -140,9 +138,7 @@
         },
         methods: {
             onTagSelect(e) {
-                let self = this;
-
-                setTimeout(() => self.$refs.search.focus(), 100);
+                setTimeout(() => this.$refs.search.focus(), 100);
                 e.stopPropagation();
 
                 if (!this.tagListActive) {
@@ -151,37 +147,37 @@
                 }
 
                 document.onmouseover = () => {
-                    document.querySelectorAll('.' + self.tagClass).forEach((item, i) => {
+                    document.querySelectorAll('.' + this.tagClass).forEach((item, i) => {
                         item.addEventListener('mouseover', () => {
-                            self.currentTagFromList = i;
+                            this.currentTagFromList = i;
                         });
                     });
 
-                    self.updateSelection();
+                    this.updateSelection();
                 };
 
                 document.onkeydown = e => {
                     switch (e.keyCode) {
                         case 13:
-                            self.handleEnterKey();
+                            this.handleEnterKey();
 
                             break;
                         case 8:
-                            self.handleBackspaceKey();
+                            this.handleBackspaceKey();
 
                             break;
                         case 9:
-                            self.handleTabKey();
+                            this.handleTabKey();
 
                             break;
                         case 38:
-                            self.handleUpKey();
-                            self.updateSelection();
+                            this.handleUpKey();
+                            this.updateSelection();
 
                             break;
                         case 40:
-                            self.handleDownKey();
-                            self.updateSelection();
+                            this.handleDownKey();
+                            this.updateSelection();
 
                             break;
                     }
