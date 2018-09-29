@@ -144,9 +144,7 @@
 
                 document.onmouseover = () => {
                     document.querySelectorAll('.' + this.tagClass).forEach((item, i) => {
-                        item.addEventListener('mouseover', () => {
-                            this.currentTagFromList = i;
-                        });
+                        item.addEventListener('mouseover', () => this.currentTagFromList = i);
                     });
 
                     this.updateSelection();
@@ -180,14 +178,17 @@
                 };
             },
             addTag(index) {
-                if (!this.tagSelected(index) && this.search.length > 0) {
+                if (this.tagSelected(index)) {
+                    return;
+                }
+
+                this.$emit('on-tag-added', this.filteredList[index]);
+
+                if (this.search.length > 0) {
                     this.currentTagFromList = null;
                 }
 
-                if (!this.tagSelected(index)) {
-                    this.$emit('on-tag-added', this.filteredList[index]);
-                    this.search = '';
-                }
+                this.search = '';
             },
             removeTag(tag) {
                 this.$emit('on-tag-removed', tag);
@@ -212,12 +213,10 @@
                     this.currentTagFromList = null;
                 }
 
-                if (this.search.length < 1) {
+                if (this.search.length < 1 && this.active.length > 0) {
                     // Тут стоит возвращать сам тег - сейчас логика основана на том, что backspace
                     // удаляет теги по очереди с конца.
-                    if (this.active.length > 0) {
-                        this.removeTag(this.active.length - 1);
-                    }
+                    this.removeTag(this.active.length - 1);
                 }
             },
             handleUpKey() {
@@ -245,7 +244,9 @@
                 }
             },
             handleClickOutsideTagList(e) {
-                if (e.target.closest('.tags__list')) return;
+                if (e.target.closest('.tags__list')) {
+                    return;
+                }
 
                 this.$emit('on-tag-list-closed');
 
