@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2018-09-30
+
+- Creating tags now is optional function.
+- Option `colors` for an array of colors that can be applied to the created tags. The color mode is now enabled with the `colorsEnabled` option.
+- Update screenshot.
+
 ## [1.1.0] - 2018-09-30
 
 - Creating new tags from component.

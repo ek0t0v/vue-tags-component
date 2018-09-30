@@ -14,6 +14,8 @@ The package contains a Vue.js component for adding and removing tags.
 - search
 - events
 - tabindex
+- colored tags
+- tags creation
 
 ## Installation
 
@@ -47,7 +49,9 @@ On your page you can now use html like this:
     :all="allTags"
     :element-count-for-start-arrow-scrolling="3"
     :tab-index="1"
-    :colors="false"
+    :tag-creation-enabled="true"
+    :colors-enabled="false"
+    :colors="colors"
     :tag-color-default="'green'"
     :tag-list-label="'Select an option'"
     @on-tag-added="onTagAdded"
@@ -63,6 +67,7 @@ All props and events are indicated in the example above. Tags should look like t
 ```json
 [
     {
+        "id": 1,
         "name": "Tag",
         "slug": "tag (optional)",
         "color": "#963dff (optional)"
@@ -73,8 +78,7 @@ All props and events are indicated in the example above. Tags should look like t
 ## TODO
 
 - ~~Closing the drop-down list when clicking outside the component.~~
-- Remove already added tags from the general list of tags. In the search, you can not find an already added tag.
-- Make the functionality of creating a new tag, add a tag creation event. Make this functionality optional (the ability to enable via props).
+- ~~Make the functionality of creating a new tag, add a tag creation event. Make this functionality optional (the ability to enable via props).~~
 - Validating tag objects in the prop, the tag must contain name, slug, and color.
 - To think up a convenient way of styling (redefining standard styles or some other way).
 - Adaptive layout.
@@ -102,4 +106,4 @@ Called when the list of tags is closed.
 
 ### onTagCreated
 
-Called when a new tag is created, it passes the tag object with id = 0 (the identifier must be changed, since 0 denotes the tag to create).
+Called when a new tag is created, it passes the tag object with id = 0 (the identifier must be changed, since 0 denotes the tag to create). The component does not process the slug field of the tag, slug will be equal to the name of the tag, you can process it as you need (for example, `tag.slug.toLowerCase (). Replace (/ / g, '_')`).

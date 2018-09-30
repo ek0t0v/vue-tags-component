@@ -19,7 +19,7 @@
                     class="tag"
                     v-for="(tag, index) in active"
                     :key="index"
-                    :style="'background-color:' + (colors && 'color' in tag ? tag.color : tagColorDefault)"
+                    :style="'background-color:' + (colorsEnabled && 'color' in tag ? tag.color : tagColorDefault)"
                 >
                     <span class="tag__name">{{ tag.name }}</span>
                     <div
@@ -55,10 +55,10 @@
                     :key="index"
                     @click="addTag(index)"
                 >
-                    <span class="tags__create-tag-label" v-if="tag.id === 0">Create</span>
+                    <span class="tags__create-tag-label" v-if="tagCreationEnabled && tag.id === 0">Create</span>
                     <div
                         class="tags__list-item-tag"
-                        :style="'background-color:' + (colors && 'color' in tag ? tag.color : tagColorDefault)"
+                        :style="'background-color:' + (colorsEnabled && 'color' in tag ? tag.color : tagColorDefault)"
                     >
                         <span>{{ tag.name }}</span>
                     </div>
@@ -92,10 +92,26 @@
                 default: 1,
                 validator: value => value > 0,
             },
-            colors: {
+            tagCreationEnabled: {
                 type: Boolean,
                 required: false,
                 default: false,
+            },
+            colorsEnabled: {
+                type: Boolean,
+                required: false,
+                default: false,
+            },
+            colors: {
+                type: Array,
+                required: false,
+                default: () => [
+                    '#0099ff',
+                    '#4cca3c',
+                    '#ff5460',
+                    '#963dff',
+                    '#FFB800',
+                ],
             },
             tagColorDefault: {
                 type: String,
@@ -106,7 +122,7 @@
                 type: String,
                 required: false,
                 default: 'Select an option',
-            }
+            },
         },
         data() {
             return {
@@ -115,7 +131,8 @@
                 currentTagFromList: null,
                 tagClass: 'tags__list-item',
                 tagFocusedClass: 'tags__list-item--focused',
-                tagListElementHeight: 34
+                tagListElementHeight: 34,
+                newTagColor: null,
             };
         },
         mounted() {
@@ -126,18 +143,26 @@
                 this.currentTagFromList = 0;
             }
 
+            if (this.tagCreationEnabled && this.search.length === 0) {
+                this.newTagColor = null;
+            }
+
             this.updateSelection();
         },
         computed: {
             filteredList() {
                 let list = this.all.filter(tag => tag.name.toLowerCase().indexOf(this.search.toLowerCase()) >= 0);
 
-                if (this.search.length > 0 && list.every(item => item.name !== this.search)) {
+                if (this.tagCreationEnabled && this.search.length > 0 && list.every(item => item.name !== this.search)) {
+                    if (!this.newTagColor) {
+                        this.newTagColor = this.getColorForNewTag();
+                    }
+
                     list.push({
                         id: 0,
                         name: this.search,
                         slug: this.search,
-                        color: this.tagColorDefault,
+                        color: this.newTagColor,
                     });
                 }
 
@@ -194,10 +219,12 @@
                     return;
                 }
 
-                this.$emit(this.filteredList[index].id === 0 ? 'on-tag-created' : 'on-tag-added', this.filteredList[index]);
+                this.tagCreationEnabled
+                    ? this.$emit(this.filteredList[index].id === 0 ? 'on-tag-created' : 'on-tag-added', this.filteredList[index])
+                    : this.$emit('on-tag-added', this.filteredList[index]);
 
-                if (this.search.length > 0) {
-                    this.currentTagFromList = null;
+                if (this.tagCreationEnabled && this.search.length > 0) {
+                    this.newTagColor = null;
                 }
 
                 this.search = '';
@@ -273,6 +300,11 @@
                         ? item.classList.add(this.tagFocusedClass)
                         : item.classList.remove(this.tagFocusedClass);
                 });
+            },
+            getColorForNewTag() {
+                return this.tagCreationEnabled && this.colorsEnabled
+                    ? this.colors[Math.floor(Math.random() * this.colors.length)]
+                    : this.tagColorDefault;
             },
             getScrollHeight() {
                 return Math.max(
