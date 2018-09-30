@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2018-09-30
+
+- Creating new tags from component.
+
 ## [1.0.14] - 2018-09-29
 
 - Fix tag selection behavior.

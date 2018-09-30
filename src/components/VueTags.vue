@@ -55,6 +55,7 @@
                     :key="index"
                     @click="addTag(index)"
                 >
+                    <span class="tags__create-tag-label" v-if="tag.id === 0">Create</span>
                     <div
                         class="tags__list-item-tag"
                         :style="'background-color:' + (colors && 'color' in tag ? tag.color : tagColorDefault)"
@@ -114,7 +115,7 @@
                 currentTagFromList: null,
                 tagClass: 'tags__list-item',
                 tagFocusedClass: 'tags__list-item--focused',
-                tagListElementHeight: 34,
+                tagListElementHeight: 34
             };
         },
         mounted() {
@@ -129,7 +130,18 @@
         },
         computed: {
             filteredList() {
-                return this.all.filter(tag => tag.name.toLowerCase().indexOf(this.search.toLowerCase()) >= 0);
+                let list = this.all.filter(tag => tag.name.toLowerCase().indexOf(this.search.toLowerCase()) >= 0);
+
+                if (this.search.length > 0 && list.every(item => item.name !== this.search)) {
+                    list.push({
+                        id: 0,
+                        name: this.search,
+                        slug: this.search,
+                        color: this.tagColorDefault,
+                    });
+                }
+
+                return list;
             },
         },
         methods: {
@@ -182,7 +194,7 @@
                     return;
                 }
 
-                this.$emit('on-tag-added', this.filteredList[index]);
+                this.$emit(this.filteredList[index].id === 0 ? 'on-tag-created' : 'on-tag-added', this.filteredList[index]);
 
                 if (this.search.length > 0) {
                     this.currentTagFromList = null;
@@ -366,7 +378,7 @@
 
         &__list-item {
 
-            .flex(column, nowrap, flex-start, flex-start);
+            .flex(row, nowrap, flex-start, flex-start);
             width: calc(100% - 14px);
             min-height: 24px;
             padding: 5px 7px;
@@ -396,6 +408,11 @@
                 margin: 0;
             }
 
+        }
+
+        &__create-tag-label {
+            margin: 0 7px 0 0 !important;
+            line-height: 24px;
         }
 
         &__shadow {

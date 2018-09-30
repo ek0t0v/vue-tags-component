@@ -54,6 +54,7 @@ On your page you can now use html like this:
     @on-tag-removed="onTagRemoved"
     @on-tag-list-opened="onTagListOpened"
     @on-tag-list-closed="onTagListClosed"
+    @on-tag-created="onTagCreated"
 />
 ```
 
@@ -98,3 +99,7 @@ Called when opening a list of tags.
 ### onTagListClosed
 
 Called when the list of tags is closed.
+
+### onTagCreated
+
+Called when a new tag is created, it passes the tag object with id = 0 (the identifier must be changed, since 0 denotes the tag to create).
