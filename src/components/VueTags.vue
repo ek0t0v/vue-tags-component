@@ -302,7 +302,11 @@
                 });
             },
             getColorForNewTag() {
-                return this.tagCreationEnabled && this.colorsEnabled
+                if (!this.tagCreationEnabled) {
+                    return;
+                }
+
+                return this.colorsEnabled
                     ? this.colors[Math.floor(Math.random() * this.colors.length)]
                     : this.tagColorDefault;
             },
