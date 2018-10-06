@@ -38,7 +38,6 @@
                         type="text"
                         v-if="tagListActive"
                         v-model="search"
-                        ref="search"
                         tabindex="-1"
                     />
                 </div>
@@ -46,7 +45,6 @@
             <div
                 class="tags__list"
                 v-if="tagListActive"
-                ref="list"
             >
                 <span>{{ tagListLabel }}</span>
                 <div
@@ -129,10 +127,12 @@
                 tagListActive: false,
                 search: '',
                 currentTagFromList: null,
+                tagListClass: 'tags__list',
                 tagClass: 'tags__list-item',
                 tagFocusedClass: 'tags__list-item--focused',
                 tagListElementHeight: 34,
                 newTagColor: null,
+                searchInputClass: 'tags__search',
             };
         },
         mounted() {
@@ -171,7 +171,7 @@
         },
         methods: {
             onTagSelect(e) {
-                setTimeout(() => this.$refs.search.focus(), 100);
+                setTimeout(() => document.querySelector('.' + this.searchInputClass).focus(), 100);
                 e.stopPropagation();
 
                 if (!this.tagListActive) {
@@ -253,33 +253,35 @@
                 }
 
                 if (this.search.length < 1 && this.active.length > 0) {
-                    // Тут стоит возвращать сам тег - сейчас логика основана на том, что backspace
-                    // удаляет теги по очереди с конца.
                     this.removeTag(this.active.length - 1);
                 }
             },
             handleUpKey() {
+                let tagList = document.querySelector('.' + this.tagListClass);
+
                 if (this.currentTagFromList === null || this.currentTagFromList <= 0) {
                     this.currentTagFromList = this.filteredList.length - 1;
-                    this.$refs.list.scrollTo(0, this.getScrollHeight());
+                    tagList.scrollTo(0, this.getScrollHeight());
                 } else if (this.currentTagFromList > 0) {
                     this.currentTagFromList--;
                 }
 
                 if (this.filteredList.length - this.currentTagFromList > this.elementCountForStartArrowScrolling) {
-                    this.$refs.list.scrollBy(0, -1 * this.tagListElementHeight);
+                    tagList.scrollBy(0, -1 * this.tagListElementHeight);
                 }
             },
             handleDownKey() {
+                let tagList = document.querySelector('.' + this.tagListClass);
+
                 if (this.currentTagFromList === null || this.currentTagFromList === this.filteredList.length - 1) {
                     this.currentTagFromList = 0;
-                    this.$refs.list.scrollTo(0, 0);
+                    tagList.scrollTo(0, 0);
                 } else if (this.currentTagFromList >= 0 && this.currentTagFromList < this.filteredList.length - 1) {
                     this.currentTagFromList++;
                 }
 
                 if (this.currentTagFromList > this.elementCountForStartArrowScrolling - 1) {
-                    this.$refs.list.scrollBy(0, this.tagListElementHeight);
+                    tagList.scrollBy(0, this.tagListElementHeight);
                 }
             },
             handleClickOutsideTagList(e) {
