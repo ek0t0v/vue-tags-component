@@ -289,7 +289,9 @@
                     return;
                 }
 
-                this.$emit('on-tag-list-closed');
+                if (this.tagListActive) {
+                    this.$emit('on-tag-list-closed');
+                }
 
                 document.onkeydown = null;
                 this.tagListActive = false;
