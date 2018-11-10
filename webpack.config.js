@@ -1,6 +1,6 @@
 const path = require('path');
 const merge = require('webpack-merge');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge({
     module: {
@@ -16,15 +16,19 @@ module.exports = merge({
                 exclude: /node_modules/,
             },
             {
-                test: /\.(less|css)$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'style-loader!css-loader!less-loader'),
+                test: /\.less$/,
                 exclude: /node_modules/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'less-loader',
+                ],
             },
         ],
     },
     plugins: [
-        new ExtractTextPlugin('style.css', {
-            allChunks: true,
+        new MiniCssExtractPlugin({
+            filename: 'style.css',
         }),
     ],
     resolve: {
