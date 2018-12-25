@@ -88,22 +88,22 @@ All props and events are indicated in the example above. Tags should look like t
 
 ## Events
 
-### onTagAdded
+### on-tag-added
 
 Called when the tag is added to the active list, it passes the tag object.
 
-### onTagRemoved
+### on-tag-removed
 
 Called when the tag is removed from the active list, it passes the tag object.
 
-### onTagListOpened
+### on-tag-list-opened
 
 Called when opening a list of tags.
 
-### onTagListClosed
+### on-tag-list-closed
 
 Called when the list of tags is closed.
 
-### onTagCreated
+### on-tag-created
 
 Called when a new tag is created, it passes the tag object with id = 0 (the identifier must be changed, since 0 denotes the tag to create). The component does not process the slug field of the tag, slug will be equal to the name of the tag, you can process it as you need (for example, `tag.slug.toLowerCase (). Replace (/ / g, '_')`).
