@@ -73,36 +73,31 @@
             active: {
                 type: Array,
                 required: true,
+                validator: v => v.every(tag => {
+                    return tag.hasOwnProperty('id') && tag.hasOwnProperty('name');
+                }),
             },
             all: {
                 type: Array,
                 required: true,
+                validator: v => v.every(tag => {
+                    return tag.hasOwnProperty('id') && tag.hasOwnProperty('name');
+                }),
             },
             elementCountForStartArrowScrolling: {
                 type: Number,
-                required: false,
                 default: 3,
-                validator: value => value >= 1,
+                validator: v => v >= 1,
             },
             tabIndex: {
                 type: Number,
-                required: false,
                 default: 1,
-                validator: value => value > 0,
+                validator: v => v > 0,
             },
-            tagCreationEnabled: {
-                type: Boolean,
-                required: false,
-                default: false,
-            },
-            colorsEnabled: {
-                type: Boolean,
-                required: false,
-                default: false,
-            },
+            tagCreationEnabled: Boolean,
+            colorsEnabled: Boolean,
             colors: {
                 type: Array,
-                required: false,
                 default: () => [
                     '#0099ff',
                     '#4cca3c',
@@ -110,15 +105,14 @@
                     '#963dff',
                     '#FFB800',
                 ],
+                validator: v => v.every(color => typeof color === 'string' || color instanceof String),
             },
             tagColorDefault: {
                 type: String,
-                required: false,
                 default: '#333',
             },
             tagListLabel: {
                 type: String,
-                required: false,
                 default: 'Select an option',
             },
         },
