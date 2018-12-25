@@ -36,9 +36,9 @@
                     <input
                         class="tags__search"
                         type="text"
-                        v-if="tagListActive"
                         v-model="search"
                         tabindex="-1"
+                        :placeholder="computedPlaceholder"
                     />
                 </div>
             </div>
@@ -84,6 +84,7 @@
                     return tag.hasOwnProperty('id') && tag.hasOwnProperty('name');
                 }),
             },
+            placeholder: String,
             elementCountForStartArrowScrolling: {
                 type: Number,
                 default: 3,
@@ -161,6 +162,13 @@
                 }
 
                 return list;
+            },
+            computedPlaceholder() {
+                if (this.active.length > 0) {
+                    return;
+                }
+
+                return this.placeholder;
             },
         },
         methods: {

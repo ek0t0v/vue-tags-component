@@ -54,6 +54,7 @@ On your page you can now use html like this:
     :colors="colors"
     :tag-color-default="'green'"
     :tag-list-label="'Select an option'"
+    :placeholder="'Select an option'"
     @on-tag-added="onTagAdded"
     @on-tag-removed="onTagRemoved"
     @on-tag-list-opened="onTagListOpened"
@@ -79,12 +80,11 @@ All props and events are indicated in the example above. Tags should look like t
 
 - ~~Closing the drop-down list when clicking outside the component.~~
 - ~~Make the functionality of creating a new tag, add a tag creation event. Make this functionality optional (the ability to enable via props).~~
-- Validating tag objects in the prop, the tag must contain name, slug, and color.
 - To think up a convenient way of styling (redefining standard styles or some other way).
 - Adaptive layout.
 - Animation.
-- Placeholder for the search string (do you need?). Show the placeholder only when no tag is selected.
-- tagColorDefault prop validation.
+- ~~Placeholder for the search string (do you need?). Show the placeholder only when no tag is selected.~~
+- ~~tagColorDefault prop validation.~~
 
 ## Events
 

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2018-12-25
+
+- Props validation.
+- Add placeholder prop.
+
 ## [1.2.0] - 2018-09-30
 
 - Creating tags now is optional function.
